@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -19,7 +20,13 @@ public class Enemy : MonoBehaviour
         if (hitPoints < 0)
         {
             animator.SetTrigger("Die");
-            Destroy(gameObject, 3);
+            GetComponent<NavMeshAgent>().SetDestination(transform.position);
+            GetComponent<EnemyController>().Dead = true;
         }
+    }
+
+    public void Disappear()
+    {
+        Destroy(gameObject);
     }
 }

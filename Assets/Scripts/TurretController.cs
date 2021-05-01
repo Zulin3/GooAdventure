@@ -10,6 +10,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private Transform shotSpawn;
 
     private GameObject _target;
+    private bool _dead = false;
     private Animator animator;
 
     void Awake()
@@ -17,9 +18,17 @@ public class TurretController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public bool Dead
+    {
+        set
+        {
+            _dead = value;
+        }
+    }
+
     void Update()
     {
-        if (_target != null)
+        if (_target != null && !_dead)
         {
             Vector3 direction = _target.transform.position - transform.position;
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, direction, rotateSpeed * Time.deltaTime, 0);
@@ -41,7 +50,7 @@ public class TurretController : MonoBehaviour
 
     private IEnumerator Shoot()
     {
-        while (true)
+        while (!_dead)
         {
             Vector3 shotTarget = _target.transform.position;
             shotTarget += Vector3.up;
@@ -53,7 +62,7 @@ public class TurretController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !_dead)
         {
             _target = other.gameObject;
             startShooting();
@@ -62,7 +71,7 @@ public class TurretController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !_dead)
         {
             _target = null;
             stopShooting();
