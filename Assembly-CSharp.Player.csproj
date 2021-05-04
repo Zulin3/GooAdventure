@@ -61,6 +61,7 @@
     <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\EnemySpawnController.cs" />
+    <Compile Include="Assets\Scripts\PullLever.cs" />
     <Compile Include="Assets\Scripts\ShotMover.cs" />
     <Compile Include="Assets\Scripts\AmmoPickupController.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
@@ -68,17 +69,19 @@
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
+    <Compile Include="Assets\Scripts\PatrolEnemy.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\BombExplosion.cs" />
     <Compile Include="Assets\Scripts\Trap.cs" />
     <Compile Include="Assets\Scripts\TurretController.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
-    <Compile Include="Assets\Scripts\PatrolEnemy.cs" />
-    <Compile Include="Assets\Scripts\PullLever.cs" />
+    <Compile Include="Assets\Scripts\KnifeController.cs" />
+    <Compile Include="Assets\Scripts\BossController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
+     <None Include="Assets\FreeWeapons\Read_me.txt" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.3.3f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
     </Reference>
