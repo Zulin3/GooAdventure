@@ -25,8 +25,8 @@ public class BombExplosion : MonoBehaviour
             Debug.Log(hitCollider.gameObject);
             if (hitCollider.gameObject.tag == "Enemy")
             {
-                var enemy = hitCollider.gameObject.GetComponent<Enemy>();
-                enemy.ApplyDamage(explosionDamage);
+                var enemy = hitCollider.gameObject.GetComponent<Damageable>();
+                enemy.dealDamage(explosionDamage);
             }
                 
         }

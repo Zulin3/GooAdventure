@@ -7,6 +7,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private float rotateSpeed = 3f;
     [SerializeField] private float shootDelay = 1f;
     [SerializeField] private GameObject shot;
+    [SerializeField] private GameObject eye;
     [SerializeField] private Transform shotSpawn;
 
     private GameObject _target;
@@ -28,6 +29,12 @@ public class TurretController : MonoBehaviour
 
     void Update()
     {
+        if (animator.GetBool("Dead") && !_dead)
+        {
+            _dead = true;
+            stopShooting();
+        }
+        
         if (_target != null && !_dead)
         {
             Vector3 direction = _target.transform.position - transform.position;
@@ -39,6 +46,7 @@ public class TurretController : MonoBehaviour
     private void startShooting()
     {
         animator.SetBool("Attacking", true);
+        StopCoroutine(Shoot());
         StartCoroutine(Shoot());
     }
 
@@ -52,10 +60,18 @@ public class TurretController : MonoBehaviour
     {
         while (!_dead)
         {
-            Vector3 shotTarget = _target.transform.position;
-            shotTarget += Vector3.up;
-            var newShot = Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-            newShot.GetComponent<ShotMover>().Target = shotTarget;
+            RaycastHit hit;
+            bool isHit = Physics.Raycast(eye.transform.position, eye.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
+
+            if (isHit && hit.collider.tag == "Player")
+            {
+
+                Vector3 shotTarget = _target.transform.position;
+                shotTarget += Vector3.up;
+                var newShot = Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+                newShot.GetComponent<ShotMover>().Target = shotTarget;
+                yield return new WaitForSeconds(shootDelay);
+            }
             yield return new WaitForSeconds(shootDelay);
         }
     }

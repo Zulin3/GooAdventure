@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1971960825664622652}
   - component: {fileID: 4841342647413450475}
   - component: {fileID: 5354986975590526222}
+  - component: {fileID: 8986852880289092804}
   - component: {fileID: -3020421565363572926}
   m_Layer: 0
   m_Name: GooShot
@@ -113,6 +114,20 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &8986852880289092804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32283707514253802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6664f520f02bae54c83a8692e4e46486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerShot: 0
+  damage: 10
 --- !u!114 &-3020421565363572926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,3 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e34a8231d597e604eb5940fce5bd7028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 4

@@ -6,8 +6,10 @@ using UnityEngine.AI;
 public class BossController : MonoBehaviour
 {
     [SerializeField] private Transform eye;
+    [SerializeField] private float rotateSpeed = 2;
     [SerializeField] private float recountPathDelay = 1f;
     [SerializeField] private float stopFollowingDelay = 5f;
+    [SerializeField] private GameObject damageArea;
 
     private bool _dead = false;
     private Animator animator;
@@ -34,24 +36,28 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit = new RaycastHit();
-        Physics.Raycast(eye.position, eye.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
+        RaycastHit hit;
+        bool isHit = Physics.Raycast(eye.position, eye.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
 
-        if (!followingPlayer && hit.collider.tag == "Player")
+        if (isHit)
         {
-            Debug.DrawRay(eye.position, eye.transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-            followingPlayer = true;
-            GetComponent<PatrolEnemy>().Patrolling = false;
-            StartCoroutine(RecountPath());
-            StopCoroutine(StopFollowingAfterDelay());        }
-        else
-        {
-            Debug.DrawRay(eye.position, eye.transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-        }
+            if (!followingPlayer && hit.collider.tag == "Player")
+            {
+                followingPlayer = true;
+                GetComponent<PatrolEnemy>().Patrolling = false;
+                StartCoroutine(RecountPath());
+                StopCoroutine(StopFollowingAfterDelay());
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    animator.SetTrigger("Attack");
+                    animator.SetBool("Attacking",true);
+                }
+            }
 
-        if (followingPlayer && hit.collider.tag != "Player")
-        {
-            StartCoroutine(StopFollowingAfterDelay());
+            if (followingPlayer && hit.collider.tag != "Player")
+            {
+                StartCoroutine(StopFollowingAfterDelay());
+            }
         }
     }
 
@@ -73,5 +79,16 @@ public class BossController : MonoBehaviour
             agent.SetDestination(player.position);
             yield return new WaitForSeconds(recountPathDelay);
         }
+    }
+
+
+    public void Attack()
+    {
+        damageArea.SetActive(true);
+    }
+
+    public void NoAttack()
+    {
+        damageArea.SetActive(false);
     }
 }
