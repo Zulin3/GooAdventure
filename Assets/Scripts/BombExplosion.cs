@@ -8,7 +8,7 @@ public class BombExplosion : MonoBehaviour
     [SerializeField] private float explosionRadius = 5;
     [SerializeField] private float explosionDamage = 50;
     [SerializeField] private GameObject explosion;
-    // Start is called before the first frame update
+
     void Start()
     {
         StartCoroutine(Explode());
@@ -25,11 +25,12 @@ public class BombExplosion : MonoBehaviour
             Debug.Log(hitCollider.gameObject);
             if (hitCollider.gameObject.tag == "Enemy")
             {
-                var enemy = hitCollider.gameObject.GetComponent<Enemy>();
-                enemy.ApplyDamage(explosionDamage);
+                var enemy = hitCollider.gameObject.GetComponent<Damageable>();
+                enemy.dealDamage(explosionDamage);
             }
                 
         }
+        Debug.Log("An explosion explodes!");
         Destroy(gameObject);
     }
 }

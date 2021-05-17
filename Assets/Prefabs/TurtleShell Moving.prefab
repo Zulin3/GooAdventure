@@ -94,6 +94,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurtleShell Moving
       objectReference: {fileID: 0}
+    - target: {fileID: 1774342935043096720, guid: 4e6c45560a9391e489b7cf6128eed90b, type: 3}
+      propertyPath: rotateSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1774342935043096727, guid: 4e6c45560a9391e489b7cf6128eed90b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e6c45560a9391e489b7cf6128eed90b, type: 3}
