@@ -8,8 +8,11 @@ public class Damageable : MonoBehaviour
 {
     [SerializeField] private float maxHealth;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioClip dieSound;
     private float health;
     private Animator animator;
+    private AudioSource audio;
 
     void Awake()
     {
@@ -17,6 +20,7 @@ public class Damageable : MonoBehaviour
         healthBar.maxValue = maxHealth;
         healthBar.value = maxHealth;
         animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
     }
 
     public void dealDamage(float dmg)
@@ -27,6 +31,12 @@ public class Damageable : MonoBehaviour
         if (health <= 0)
         {
             animator.SetTrigger("Die");
+            if (audio)
+            {
+                audio.clip = dieSound;
+                audio.Play();
+            }
+            
             var agent = GetComponent<NavMeshAgent>();
             if (agent)
             {
@@ -46,6 +56,12 @@ public class Damageable : MonoBehaviour
         else
         {
             animator.SetTrigger("Hit");
+            if (audio)
+            {
+                audio.clip = hitSound;
+                audio.Play();
+            }
+            
         }
     }
 

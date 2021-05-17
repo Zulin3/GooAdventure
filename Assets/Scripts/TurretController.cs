@@ -46,20 +46,17 @@ public class TurretController : MonoBehaviour
     private void startShooting()
     {
         animator.SetBool("Attacking", true);
-        StopCoroutine(Shoot());
-        StartCoroutine(Shoot());
     }
 
     private void stopShooting()
     {
         animator.SetBool("Attacking", false);
-        StopCoroutine(Shoot());
     }
 
-    private IEnumerator Shoot()
+    public void Shoot()
     {
-        while (!_dead)
-        {
+        //if (!_dead)
+        //{
             RaycastHit hit;
             bool isHit = Physics.Raycast(eye.transform.position, eye.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
 
@@ -70,24 +67,22 @@ public class TurretController : MonoBehaviour
                 shotTarget += Vector3.up;
                 var newShot = Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
                 newShot.GetComponent<ShotMover>().Target = shotTarget;
-                yield return new WaitForSeconds(shootDelay);
             }
-            yield return new WaitForSeconds(shootDelay);
-        }
+        //}
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void PlayerEntered(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !_dead)
+        if (!_dead)
         {
             _target = other.gameObject;
             startShooting();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void PlayerExited(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !_dead)
+        if (!_dead)
         {
             _target = null;
             stopShooting();

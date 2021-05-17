@@ -8,7 +8,7 @@ public class BombExplosion : MonoBehaviour
     [SerializeField] private float explosionRadius = 5;
     [SerializeField] private float explosionDamage = 50;
     [SerializeField] private GameObject explosion;
-	
+
     void Start()
     {
         StartCoroutine(Explode());
@@ -30,6 +30,7 @@ public class BombExplosion : MonoBehaviour
             }
                 
         }
+        Debug.Log("An explosion explodes!");
         Destroy(gameObject);
     }
 }

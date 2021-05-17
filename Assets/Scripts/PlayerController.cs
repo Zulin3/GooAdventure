@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float jumpMoveSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float cameraRotateSpeed;
     [SerializeField] private Transform bombSpawner;
@@ -18,13 +18,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int ammo = 5;
     [SerializeField] private GameObject damageArea;
     [SerializeField] private Text bombCounterText;
+    [SerializeField] private AudioClip swingSound;
 
-    Animator animator;
-    Rigidbody rb;
+    private Animator animator;
+    private Rigidbody rb;
+    private AudioSource audio;
     bool jumping = false;
 
     private void Awake()
     {
+        audio = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
@@ -58,8 +61,7 @@ public class PlayerController : MonoBehaviour
 
         if (jumping)
         {
-            animator.SetFloat("Speed", direction.magnitude);
-            var moveVector = direction * moveSpeed * Time.deltaTime;
+            var moveVector = transform.forward * jumpMoveSpeed * Time.deltaTime;
             transform.Translate(moveVector);
         }
 
@@ -135,6 +137,8 @@ public class PlayerController : MonoBehaviour
     public void Attack()
     {
         damageArea.SetActive(true);
+        audio.clip = swingSound;
+        audio.Play();
     }
 
     public void NoAttack()

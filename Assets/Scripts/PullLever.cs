@@ -12,6 +12,7 @@ public class PullLever : MonoBehaviour
         if (other.gameObject.tag == "Player" && !pulled)
         {
             Animation anim = objectToActivate.GetComponent<Animation>();
+            GetComponent<AudioSource>().Play();
 
             GetComponent<Animation>().Play("PullLever");
             anim.Play("SecretDoorOpen");

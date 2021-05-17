@@ -17,7 +17,6 @@ public class BossController : MonoBehaviour
     private Transform player;
     private NavMeshAgent agent;
 
-
     public bool Dead
     {
         set
@@ -63,9 +62,7 @@ public class BossController : MonoBehaviour
 
     private IEnumerator StopFollowingAfterDelay()
     {
-        Debug.Log("Stopping following after 5s");
         yield return new WaitForSeconds(stopFollowingDelay);
-        Debug.Log("Stopped following");
         StopCoroutine(RecountPath());
         followingPlayer = false;
         GetComponent<PatrolEnemy>().Patrolling = true;
@@ -75,7 +72,6 @@ public class BossController : MonoBehaviour
     {
         while (!_dead && followingPlayer)
         {
-            Debug.Log("Started Following!");
             agent.SetDestination(player.position);
             yield return new WaitForSeconds(recountPathDelay);
         }
