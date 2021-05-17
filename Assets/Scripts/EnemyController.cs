@@ -6,6 +6,9 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float recountPathDelay = 1;
+    [SerializeField] private float rotateSpeed = 3;
+    [SerializeField] private GameObject eye;
+    [SerializeField] private GameObject damageArea;
     private NavMeshAgent agent;
     private GameObject player;
     private bool _dead = false;
@@ -35,16 +38,28 @@ public class EnemyController : MonoBehaviour
     {
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (!animator.GetBool("Attacking"))
+            Vector3 direction = player.transform.position - transform.position;
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, direction, rotateSpeed * Time.deltaTime, 0);
+            transform.rotation = Quaternion.LookRotation(newDirection);
+
+            RaycastHit hit;
+            bool isHit = Physics.Raycast(eye.transform.position, eye.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
+
+            if (isHit && hit.collider.tag == "Player")
             {
-                animator.SetBool("Attacking", true);
                 animator.SetTrigger("Attack");
             }
         }
-        else
-        {
-            animator.SetBool("Attacking", false);
-        }
+    }
+
+    public void Attack()
+    {
+        damageArea.SetActive(true);
+    }
+
+    public void NoAttack()
+    {
+        damageArea.SetActive(false);
     }
 
     private IEnumerator RecountPath()
